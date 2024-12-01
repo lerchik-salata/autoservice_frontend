@@ -1,0 +1,39 @@
+.partners-section {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+  }
+
+  .partners-wrapper {
+    animation: move 10s linear infinite;
+
+    .partner-logo {
+      display: inline-block;
+      margin: 0 20px;
+      width: 200px;
+      height: auto;
+      text-align: center;
+
+      img {
+        filter: grayscale(100%);
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

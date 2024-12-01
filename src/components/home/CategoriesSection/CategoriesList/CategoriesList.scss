@@ -1,0 +1,11 @@
+.categories-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media(max-width: 767px) {
+  .categories-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

@@ -1,0 +1,44 @@
+.heading-primary {
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 80px;
+  text-transform: uppercase;
+}
+
+.heading-secondary {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 45.29px;
+  text-align: center;
+  padding-bottom: 8px;
+  border-bottom: 4px solid #C53720;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+
+.text {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 30.19px;
+  text-align: center;
+}
+
+.text-small {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20.13px;
+}
+
+.heading-tertiary {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 30.19px;
+  text-transform: uppercase;
+}
+
+@media(max-width: 1300px) {
+  .heading-primary {
+    font-size: 36px;
+    line-height: 45.29px;
+  }
+}
