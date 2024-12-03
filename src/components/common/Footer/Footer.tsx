@@ -1,5 +1,5 @@
 import './Footer.scss'
-import logo from "../../assets/logo.svg";
+import logo from "../../../assets/logo.svg";
 import {NavLink} from "react-router-dom";
 
 export const Footer = () => {
@@ -12,13 +12,13 @@ export const Footer = () => {
                 </a>
                 <nav className={'flex gap-4'}>
                     <NavLink
-                        to="/"
+                        to="/public"
                         className="link"
                     >
                         Services
                     </NavLink>
                     <NavLink
-                        to="/"
+                        to="/public"
                         className="link"
                     >
                         About

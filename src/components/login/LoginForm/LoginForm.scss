@@ -1,0 +1,28 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  background: #1D1D1D;
+  padding: 40px;
+  border: 4px solid #C53720;
+
+  &-register {
+    border: 2px solid #C53720;
+    padding: 10px;
+    text-align: center;
+  }
+
+  &-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .error-text {
+    color: #D42E12;
+    font-size: 12px;
+  }
+}

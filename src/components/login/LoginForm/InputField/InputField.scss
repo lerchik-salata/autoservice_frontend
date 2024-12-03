@@ -1,0 +1,21 @@
+.input-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  label {
+    color: #fff;
+  }
+
+  input {
+    background: none;
+    border: 2px solid #fff;
+    padding: 8px;
+    color: #fff;
+
+    &:focus {
+      border: 2px solid #D42E12;
+      outline: none;
+    }
+  }
+}

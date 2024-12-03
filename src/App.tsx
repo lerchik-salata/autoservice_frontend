@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import {Header} from "./components/Header/Header.tsx";
+import {Header} from "./components/common/Header/Header.tsx";
 import {Home} from "./pages/Home/Home.tsx";
-import {Footer} from "./components/Footer/Footer.tsx";
+import {Footer} from "./components/common/Footer/Footer.tsx";
 import {Shop} from "./pages/Shop/Shop.tsx";
 import {Contact} from "./pages/Contact/Contact.tsx";
+import {Login} from "./pages/Login/Login.tsx";
+import {Profile} from "./pages/Profile/Profile.tsx";
 
 function App() {
 
@@ -16,6 +18,9 @@ function App() {
                       <Route path="/" element={<Home />} />
                       <Route path="/shop" element={<Shop />} />
                       <Route path="/contact" element={<Contact />} />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/register" element={<Login />} />
+                      <Route path="/profile" element={<Profile />} />
                   </Routes>
               </main>
               <Footer/>
