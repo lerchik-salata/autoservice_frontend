@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import {getMe as getMeApi} from '../../api/authApi';
-import './Profile.scss';
 
 export const Profile = () => {
     const [userData, setUserData] = useState<{ name: string; surname: string } | null>(null);

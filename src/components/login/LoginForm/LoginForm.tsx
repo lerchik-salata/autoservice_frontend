@@ -1,26 +1,13 @@
 import { useState, FormEvent, ChangeEvent } from 'react';
-import './LoginForm.scss';
+import styles from './LoginForm.module.scss';
 import { InputField } from './InputField/InputField.tsx';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../store/slices/authSlice';
+import {FormData, LoginResponse} from "../../../types/auth.ts";
+import {FormField} from "../../../types/auth.ts";
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { validateField, validateForm } from '../../../utils/formValidation';
-import {login as loginApi, LoginResponse, register as registerApi} from '../../../api/authApi';
-
-interface FormData {
-    firstName?: string;
-    lastName?: string;
-    email: string;
-    password: string;
-    confirmPassword?: string;
-}
-
-interface Field {
-    id: string;
-    name: string;
-    label: string;
-    type: string;
-}
+import {login as loginApi, register as registerApi} from '../../../api/authApi';
 
 export const LoginForm = () => {
     const location = useLocation();
@@ -121,7 +108,7 @@ export const LoginForm = () => {
         }
     };
 
-    const formFields: Field[] = isLoginRoute
+    const formFields: FormField[] = isLoginRoute
         ? [
             { id: 'email', name: 'email', label: 'E-mail', type: 'email' },
             { id: 'password', name: 'password', label: 'Password', type: 'password' },
@@ -135,13 +122,13 @@ export const LoginForm = () => {
         ];
 
     return (
-        <form onSubmit={handleSubmit} className={'login-form'}>
+        <form onSubmit={handleSubmit} className={styles.loginForm}>
             <h2 className={'heading-secondary text-white'}>
                 {isLoginRoute ? 'Login' : 'Register'}
             </h2>
 
             {formFields.map((field) => (
-                <div key={field.id} className="login-form-group">
+                <div key={field.id} className={styles.loginFormGroup}>
                     <InputField
                         id={field.id}
                         name={field.name}
@@ -153,15 +140,15 @@ export const LoginForm = () => {
                         required
                     />
                     {touched[field.name] && errors[field.name] && (
-                        <p className="error-text">{errors[field.name]}</p>
+                        <p className={styles.errorText}>{errors[field.name]}</p>
                     )}
                 </div>
             ))}
 
-            {errors.global && <p className="error-text text-center mt-3 mb-3">{errors.global}</p>}
+            {errors.global && <p className={`${styles.errorText} text-center mt-3 mb-3`}>{errors.global}</p>}
 
             {isLoginRoute && (
-                <div className={'login-form-register'}>
+                <div className={styles.register}>
                     <p className={'text-small text-white mb-2'}>
                         Don't have an account?
                     </p>

@@ -1,11 +1,11 @@
-import './CategoriesSection.scss'
+import styles from './CategoriesSection.module.scss'
 import {CategoriesList} from "./CategoriesList/CategoriesList.tsx";
 
 export const CategoriesSection = () => {
 
     return (
         <>
-        <div className="categories__list">
+        <div className={styles.categoriesList}>
             <div className="container mx-auto">
                 <h2 className="heading-secondary">Automotive products: accessories, 
                     <br />

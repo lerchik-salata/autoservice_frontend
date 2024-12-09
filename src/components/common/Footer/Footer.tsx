@@ -1,11 +1,11 @@
-import './Footer.scss'
+import styles from './Footer.module.scss'
 import logo from "../../../assets/logo.svg";
 import {NavLink} from "react-router-dom";
 
 export const Footer = () => {
 
     return (
-        <footer className={'footer'}>
+        <footer className={styles.footer}>
             <div className='container mx-auto flex items-center justify-between flex-wrap gap-5'>
                 <a href={'/'}>
                     <img src={logo} alt={'Pro Auto'}/>

@@ -1,9 +1,9 @@
-.services__item {
+.servicesItem {
     display: flex;
     gap: 20px;
     align-items: center;
     padding: 30px;
-    color: #ffff;
+    color: $white;
     max-width: 605px;
     width: 100%;
     cursor: pointer;
@@ -16,7 +16,7 @@
 }
 
 @media(max-width: 767px) {
-    .services__item {
+    .servicesItem {
         img {
             width: 80px;
         }

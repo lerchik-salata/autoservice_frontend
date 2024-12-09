@@ -1,18 +1,18 @@
-.about-section {
+.aboutSection {
   background-image: url("../../../assets/image-bg.png");
   padding: 100px 0;
 }
 
-.about-block {
+.aboutBlock {
   display: flex;
   gap: 20px;
   align-items: flex-start;
   margin: 0 auto;
 }
 
-.about-info {
+.aboutInfo {
   padding: 20px;
-  border: 4px solid #D42E12;
+  border: 4px solid $primary-red;
   background: #0E0E0E99;
 
   .text {
@@ -23,7 +23,7 @@
 }
 
 @media(max-width: 767px) {
-  .about-block {
+  .aboutBlock {
     flex-direction: column-reverse;
     align-items: center;
   }

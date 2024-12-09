@@ -1,18 +1,18 @@
-.services__list-info {
+.servicesListInfo {
   display: flex;
   align-items: center;
   gap: 40px;
   justify-content: space-between;
 
 
-  .services__list-column {
+  .servicesListColumn {
     width: 100%;
     max-width: 600px;
   }
 }
 
 @media(max-width: 1300px) {
-  .services__list-info {
+  .servicesListInfo {
     flex-direction: column-reverse;
   }
 }

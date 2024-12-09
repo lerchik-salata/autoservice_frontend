@@ -1,5 +1,5 @@
 import { ChangeEvent, FocusEvent } from 'react';
-import './InputField.scss';
+import styles from './InputField.module.scss';
 
 interface InputFieldProps {
     id: string;
@@ -23,7 +23,7 @@ export const InputField = ({
                                required = false,
                            }: InputFieldProps) => {
     return (
-        <div className="input-field">
+        <div className={styles.inputField}>
             <label htmlFor={id}>{label}:</label>
             <input
                 type={type}

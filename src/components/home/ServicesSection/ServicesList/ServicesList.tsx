@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ServicesItem } from './ServicesItem/ServicesItem';
-import './ServicesList.scss';
+import styles from './ServicesList.module.scss';
 import service1 from '../../../../assets/home-service-1.png';
 import service2 from '../../../../assets/home-service-2.png';
 import service3 from '../../../../assets/home-service-3.png';
@@ -42,8 +42,8 @@ export const ServicesList = () => {
     };
 
     return (
-        <div className="services__list-info">
-            <div className="services__list-column">
+        <div className={styles.servicesListInfo}>
+            <div className={styles.servicesListColumn}>
                 {services.map(service => (
                     <ServicesItem
                         key={service.id}
@@ -57,7 +57,7 @@ export const ServicesList = () => {
                     />
                 ))}
             </div>
-            <div className="services__list-image">
+            <div>
                 <img src={activeImage} alt="Active Service" />
             </div>
         </div>

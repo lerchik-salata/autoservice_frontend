@@ -1,9 +1,9 @@
-.hero-slider {
+.heroSlider {
   position: relative;
   width: 100%;
   overflow: hidden;
 
-  &__image {
+  .image {
     height: 100%;
     background-size: cover;
     background-position: center;
@@ -11,11 +11,11 @@
     transition: background-image 0.5s ease-in-out;
   }
 
-  &__content {
+  .content {
     max-width: 700px;
   }
 
-  &__pagination {
+  .pagination {
     position: absolute;
     bottom: 20px;
     left: 50%;
@@ -23,14 +23,14 @@
     display: flex;
     gap: 10px;
 
-    .hero-slider__pagination-dot {
+    .paginationDot {
       width: 110px;
       height: 4px;
-      background-color: #fff;
+      background-color: $white;
       cursor: pointer;
 
       &.active {
-        background-color: #C53720;
+        background-color: $secondary-red;
       }
     }
   }

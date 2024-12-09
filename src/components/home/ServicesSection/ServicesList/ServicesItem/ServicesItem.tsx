@@ -1,4 +1,4 @@
-import './ServicesItem.scss'
+import styles from './ServicesItem.module.scss'
 
 interface ServicesItemProps {
     index: number;
@@ -13,7 +13,7 @@ interface ServicesItemProps {
 export const ServicesItem = ({ index, onClick, isActive, imageUrl, icon, name, description }: ServicesItemProps) => {
     return (
         <div
-            className={`services__item ${isActive ? 'active' : ''}`}
+            className={`${styles.servicesItem} ${isActive ? styles.active : ''}`}
             onClick={() => onClick(index, imageUrl)}
         >
             <img src={icon} />

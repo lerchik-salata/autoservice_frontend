@@ -1,20 +1,20 @@
-.input-field {
+.inputField {
   display: flex;
   flex-direction: column;
   gap: 10px;
 
   label {
-    color: #fff;
+    color: $white;
   }
 
   input {
     background: none;
-    border: 2px solid #fff;
+    border: 2px solid $white;
     padding: 8px;
-    color: #fff;
+    color: $white;
 
     &:focus {
-      border: 2px solid #D42E12;
+      border: 2px solid $primary-red;
       outline: none;
     }
   }

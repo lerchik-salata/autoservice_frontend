@@ -1,4 +1,4 @@
-import './PartnersSection.scss'
+import styles from './PartnersSection.module.scss'
 import logo1 from "../../../assets/logo/toyotaLogo.png"
 import logo2 from "../../../assets/logo/fordLogo.png"
 import logo3 from "../../../assets/logo/BMWLogo.png"
@@ -29,10 +29,10 @@ const partners = [
 
 export const PartnersSection = () => {
     return (
-        <div className="partners-section">
-            <div className="partners-wrapper">
+        <div className={styles.partnersSection}>
+            <div className={styles.partnersWrapper}>
                 {partners.map((partner, index) => (
-                    <div className="partner-logo" key={index}>
+                    <div className={styles.partnerLogo} key={index}>
                         <a href={partner.url} target="_blank" rel="noopener noreferrer">
                             <img
                                 src={partner.logo}
