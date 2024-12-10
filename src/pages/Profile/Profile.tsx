@@ -1,33 +1,44 @@
-import { useState, useEffect } from 'react';
-import {getMe as getMeApi} from '../../api/authApi';
+import { useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserStart, fetchUserSuccess, fetchUserFailure } from '../../store/slices/userSlice';
+import { getMe as getMeApi } from '../../api/authApi';
+import { RootState } from '../../store/store';
+import {Link, Outlet} from "react-router-dom";
 
 export const Profile = () => {
-    const [userData, setUserData] = useState<{ name: string; surname: string } | null>(null);
-    const [error, setError] = useState<string>('');
+    const dispatch = useDispatch();
+    const userData = useSelector((state: RootState) => state.user.user);
+
+    const fetchUserData = async () => {
+        dispatch(fetchUserStart());
+        try {
+            const response = await getMeApi();
+            dispatch(fetchUserSuccess(response.user));
+        } catch (err) {
+            dispatch(fetchUserFailure('Failed to fetch user data'));
+            console.error('Error fetching user data:', err);
+        }
+    };
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await getMeApi();
-                console.log(response);
-                setUserData(response.user);
-            } catch (err) {
-                setError('Failed to fetch user data');
-                console.error('Error fetching user data:', err);
-            }
-        };
         fetchUserData();
-    }, []);
+    }, [dispatch]);
 
-    if (error) {
-        return <div>{error}</div>;
+    if (!userData) {
+        return <div>No user data</div>;
     }
 
     return (
-        <div>
-            <div className={'container mx-auto'}>
-                <h1>Hello {userData ? `${userData.name} ${userData.surname}` : 'Loading...'}!</h1>
-            </div>
+        <div className={'container mx-auto'}>
+            <h1 className="mb-4">Hello {userData.name} {userData.surname}!</h1>
+
+            <nav className="flex gap-4">
+                <Link to="/profile/settings">Settings</Link>
+                <Link to="/profile/orders">Orders</Link>
+                <Link to="/profile/repairs">Repairs</Link>
+            </nav>
+
+            <Outlet />
         </div>
     );
 };

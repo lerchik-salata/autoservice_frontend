@@ -6,6 +6,10 @@ import {Shop} from "./pages/Shop/Shop.tsx";
 import {Contact} from "./pages/Contact/Contact.tsx";
 import {Login} from "./pages/Login/Login.tsx";
 import {Profile} from "./pages/Profile/Profile.tsx";
+import AdminPage from "./pages/Admin/AdminPage.tsx";
+import {Settings} from "./pages/Profile/Settings/Settings.tsx";
+import {Orders} from "./pages/Profile/Orders/Orders.tsx";
+import {Repairs} from "./pages/Profile/Repairs/Repairs.tsx";
 
 function App() {
 
@@ -20,7 +24,12 @@ function App() {
                       <Route path="/contact" element={<Contact />} />
                       <Route path="/login" element={<Login />} />
                       <Route path="/register" element={<Login />} />
-                      <Route path="/profile" element={<Profile />} />
+                      <Route path="/profile/*" element={<Profile />}>
+                          <Route path="settings" element={<Settings />} />
+                          <Route path="orders" element={<Orders />} />
+                          <Route path="repairs" element={<Repairs />} />
+                      </Route>
+                      <Route path="/admin" element={<AdminPage />} />
                   </Routes>
               </main>
               <Footer/>

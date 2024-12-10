@@ -2,6 +2,7 @@ import styles from "./Header.module.scss";
 import logo from "../../../assets/logo.svg";
 import cart from "../../../assets/cart.svg";
 import userIcon from "../../../assets/user.svg";
+import settingsIcon from '../../../assets/settings.svg'
 import { RootState } from "../../../store/store.ts";
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +10,7 @@ import { logout } from '../../../store/slices/authSlice.ts';
 
 export const Header = () => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+    const user = useSelector((state: RootState) => state.user.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -24,8 +26,8 @@ export const Header = () => {
                     <img src={logo} alt="Pro Auto"/>
                 </NavLink>
                 <nav className="flex gap-4">
-                    <a href="/public#services" className="link">services</a>
-                    <a href="/public#about" className="link">about</a>
+                    <a href="/#services" className="link">services</a>
+                    <a href="/#about" className="link">about</a>
                     <NavLink to="/shop" className="link">shop</NavLink>
                     <NavLink to="/contact" className="link">contact</NavLink>
                 </nav>
@@ -33,9 +35,14 @@ export const Header = () => {
                     <img src={cart} alt="Cart" />
                     {isAuthenticated ? (
                         <>
-                            <NavLink to="/profile">
+                            <NavLink to="/profile/settings">
                                 <img src={userIcon} alt="User Profile"/>
                             </NavLink>
+                            {user?.role === 'admin' && (
+                                <NavLink to="/admin">
+                                    <img src={settingsIcon} alt="Admin Panel"/>
+                                </NavLink>
+                            )}
                             <button onClick={handleLogout} className="btn-primary">
                                 Logout
                             </button>

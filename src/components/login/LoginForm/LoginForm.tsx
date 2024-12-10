@@ -79,8 +79,6 @@ export const LoginForm = () => {
                 dispatch(login({ accessToken: accessToken, refreshToken: refreshToken }));
             }
 
-            console.log(`${isLoginRoute ? 'Login' : 'Register'} form submitted:`, formData);
-
             if (isLoginRoute) {
                 navigate('/profile');
             } else {
