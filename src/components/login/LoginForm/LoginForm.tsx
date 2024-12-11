@@ -80,9 +80,9 @@ export const LoginForm = () => {
             }
 
             if (isLoginRoute) {
-                navigate('/profile');
+                navigate('/profile/settings');
             } else {
-                navigate('/register');
+                navigate('/login');
             }
         } catch (error : any) {
             console.error('Error during login or registration:', error);

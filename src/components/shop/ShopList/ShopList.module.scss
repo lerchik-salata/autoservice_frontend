@@ -1,0 +1,12 @@
+.shopList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+@media(max-width: 1200px) {
+  .shopList {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

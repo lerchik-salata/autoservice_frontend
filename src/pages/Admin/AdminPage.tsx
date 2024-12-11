@@ -3,10 +3,30 @@ import Table from "../../components/admin/Table/Table.tsx";
 import styles from './AdminPage.module.scss';
 import { addCategory, deleteCategory, updateCategory, getCategories } from "../../api/categoriesApi.ts";
 import {deleteUser, getUsers} from "../../api/userApi.ts";
+import {Category} from "../../types/categories.ts";
+import {User} from "../../types/auth.ts";
+import {Product} from "../../types/products.ts";
+import {addProduct, deleteProduct, getProducts, updateProduct} from "../../api/productsApi.ts";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/store.ts";
+import {useNavigate} from "react-router-dom";
 
 const AdminPage = () => {
-    const [categories, setCategories] = useState<any[]>([]);
-    const [users, setUsers] = useState<any[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [users, setUsers] = useState<User[]>([]);
+    const [products, setProducts] = useState<Product[]>([]);
+
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+    const isAdmin = useSelector((state: RootState) => state.user.user?.role);
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login');
+        } else if(!isAdmin) {
+            navigate('/profile/settings')
+        }
+    }, [isAuthenticated, navigate]);
 
     const fetchCategories = async () => {
         const fetchedCategories = await getCategories();
@@ -18,7 +38,13 @@ const AdminPage = () => {
         setUsers(data);
     }
 
+    const fetchProducts = async () => {
+        const data = await getProducts();
+        setProducts(data);
+    }
+
     useEffect(() => {
+        fetchProducts();
         fetchCategories();
         fetchUsers();
     }, []);
@@ -41,6 +67,15 @@ const AdminPage = () => {
                     columns={['name', 'surname', 'email', 'role']}
                     data={users}
                     fetchEntities={getUsers}
+                />
+                <Table
+                    entityName="Product"
+                    addEntity={addProduct}
+                    updateEntity={updateProduct}
+                    deleteEntity={deleteProduct}
+                    columns={['name', 'description', 'price', 'category', 'image']}
+                    data={products}
+                    fetchEntities={getProducts}
                 />
             </div>
         </div>

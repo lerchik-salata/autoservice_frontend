@@ -1,0 +1,28 @@
+.profilePage {
+  background-image: url("../../assets/light-bg.png");
+  padding: 60px 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 16px;
+  border-bottom: 2px solid #e5e7eb;
+
+  .tab {
+    text-decoration: none;
+    padding: 8px 16px;
+    font-weight: bold;
+    color: #4b5563;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: $black;
+    }
+
+    &.active {
+      color: $black;
+      border-bottom: 2px solid $primary-red;
+    }
+  }
+}

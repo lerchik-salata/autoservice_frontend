@@ -5,6 +5,7 @@ import deleteIcon from '../../../assets/trash.svg';
 import plusIcon from '../../../assets/plus.svg';
 import Modal from './Modal/Modal';
 import { handleCreate, handleUpdate, handleDelete, capitalizeFirstLetter } from '../../../utils/tableActions.ts';
+import {concatenateImage} from "../../../utils/concatenateImage.ts";
 
 interface TableProps {
     entityName: string;
@@ -79,7 +80,19 @@ const Table: React.FC<TableProps> = ({
                             <tr key={entity.id}>
                                 <td>{index + 1}</td>
                                 {columns.map((column) => (
-                                    <td key={column}>{entity[column]}</td>
+                                    <td key={column}>
+                                        {column === 'image' ? (
+                                            <img
+                                                src={concatenateImage(entity[column])}
+                                                alt="preview"
+                                                style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                                            />
+                                        ) : column === 'category' ? (
+                                            entity[column]?.name || 'N/A'
+                                        ) : (
+                                            entity[column]
+                                        )}
+                                    </td>
                                 ))}
                                 <td>
                                     <div className={'flex gap-4'}>

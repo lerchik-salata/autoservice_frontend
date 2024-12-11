@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { updateUser as updateUserApi } from '../../../api/userApi';
+import styles from './ProfileForm.module.scss';
 
 interface ProfileFormProps {
     name: string;
@@ -34,7 +35,7 @@ export const ProfileForm = ({
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className={styles.profileForm}>
             <div className="flex flex-col">
                 <label htmlFor="name" className="mb-2">Name</label>
                 <input
@@ -42,7 +43,7 @@ export const ProfileForm = ({
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="border p-2 rounded"
+                    className="border p-2"
                     required
                 />
             </div>
@@ -54,14 +55,14 @@ export const ProfileForm = ({
                     type="text"
                     value={surname}
                     onChange={(e) => setSurname(e.target.value)}
-                    className="border p-2 rounded"
+                    className="border p-2"
                     required
                 />
             </div>
 
             <button
                 type="submit"
-                className="bg-blue-500 text-white p-2 rounded mt-4 disabled:opacity-50"
+                className="btn-secondary"
                 disabled={isLoading}
             >
                 {isLoading ? 'Updating...' : 'Update Profile'}

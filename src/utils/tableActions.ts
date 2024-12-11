@@ -44,6 +44,7 @@ export const handleDelete = async (
     setEntities: React.Dispatch<React.SetStateAction<any[]>>,
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
+    alert('Are tou sure to delete this item?')
     setIsLoading(true);
     try {
         await deleteEntity(id);

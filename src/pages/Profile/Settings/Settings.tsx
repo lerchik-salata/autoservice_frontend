@@ -28,7 +28,7 @@ export const Settings = () => {
 
     return (
         <div className="mt-8">
-            <h2>Edit Your Profile</h2>
+            <h2 className={'heading-tertiary mb-5'}>Edit Your Profile</h2>
 
             <ProfileForm
                 name={name}

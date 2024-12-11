@@ -1,0 +1,28 @@
+.shopPage {
+  background-image: url("../../assets/light-bg.png");
+  padding: 60px 0;
+
+  .shopFilters {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .priceFilter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .shopFilter {
+      background: none;
+      border: 2px solid $black;
+      padding: 8px;
+
+      &:focus {
+        border: 2px solid $primary-red;
+        outline: none;
+      }
+    }
+  }
+}

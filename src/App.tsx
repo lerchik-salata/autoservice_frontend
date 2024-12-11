@@ -10,6 +10,7 @@ import AdminPage from "./pages/Admin/AdminPage.tsx";
 import {Settings} from "./pages/Profile/Settings/Settings.tsx";
 import {Orders} from "./pages/Profile/Orders/Orders.tsx";
 import {Repairs} from "./pages/Profile/Repairs/Repairs.tsx";
+import {ProductPage} from "./pages/Product/ProductPage.tsx";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
                           <Route path="repairs" element={<Repairs />} />
                       </Route>
                       <Route path="/admin" element={<AdminPage />} />
+                      <Route path="/products/:id" element={<ProductPage />} />
                   </Routes>
               </main>
               <Footer/>
