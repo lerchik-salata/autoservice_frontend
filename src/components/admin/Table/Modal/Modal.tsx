@@ -4,6 +4,7 @@ import closeIcon from '../../../../assets/close.svg';
 import { initializeEntityData, validateEntityData, capitalizeFirstLetter } from '../../../../utils/tableActions.ts';
 import { Category } from "../../../../types/categories.ts";
 import { getCategories } from "../../../../api/categoriesApi.ts";
+import {trimImagePath} from "../../../../utils/concatenateImage.ts";
 
 interface ModalProps {
     isOpen: boolean;
@@ -37,14 +38,21 @@ const Modal = ({ isOpen, onClose, onSave, initialData, isEditing, columns }: Mod
 
     useEffect(() => {
         setEntityData(initializeEntityData(columns, initialData));
+        console.log(initialData)
     }, [initialData, columns]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
-        const { type, value, files } = e.target as HTMLInputElement;
+        if (e.target instanceof HTMLInputElement) {
+            const { type, value, files } = e.target;
 
-        if (type === 'file' && files && files.length > 0) {
-            setEntityData({ ...entityData, [field]: files[0] });
-        } else {
+            if (type === 'file' && files && files.length > 0) {
+                setEntityData({ ...entityData, [field]: files[0] });
+            } else {
+                setEntityData({ ...entityData, [field]: value });
+            }
+        } else if (e.target instanceof HTMLSelectElement) {
+            const { value } = e.target;
+            console.log(`Selected value for ${field}:`, value);
             setEntityData({ ...entityData, [field]: value });
         }
     };
@@ -57,10 +65,15 @@ const Modal = ({ isOpen, onClose, onSave, initialData, isEditing, columns }: Mod
         }
     };
 
-    if (!isOpen) return null;
+    const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (e.target === e.currentTarget) {
+            onClose();
+        }
+    };
 
     return (
-        <div className={styles.modalOverlay}>
+        <div  className={`${styles.modalOverlay} ${isOpen ? styles.open : ''}`}
+              onClick={handleBackgroundClick}>
             <div className={styles.modal}>
                 <button className={styles.close} onClick={onClose}>
                     <img src={closeIcon} alt="Close" />
@@ -69,13 +82,21 @@ const Modal = ({ isOpen, onClose, onSave, initialData, isEditing, columns }: Mod
                 {columns.map((column) => (
                     <div key={column} className={styles.inputGroup}>
                         {column === 'image' ? (
-                            <input
-                                type="file"
-                                onChange={(e) => handleChange(e, column)}
-                            />
+                            <div className={styles.fileInputWrapper}>
+                                <input
+                                    type="file"
+                                    id={`file-input-${column}`}
+                                    className={styles.hiddenFileInput}
+                                    onChange={(e) => handleChange(e, column)}
+                                />
+                                <label htmlFor={`file-input-${column}`} className={'btn-secondary'}>
+                                    Select file
+                                </label>
+                                <p className={styles.fileName}>{trimImagePath(entityData[column])}</p>
+                            </div>
                         ) : column === 'category' ? (
                             <select
-                                value={entityData[column] || ''}
+                                value={entityData[column].id ? entityData[column].id : ''}
                                 onChange={(e) => handleChange(e, column)}
                                 className={styles.selectInput}
                             >

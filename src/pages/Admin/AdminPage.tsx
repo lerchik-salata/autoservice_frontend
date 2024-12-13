@@ -1,82 +1,74 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import Table from "../../components/admin/Table/Table.tsx";
+import Tabs from "../../components/common/Tabs/Tabs.tsx";
+
 import styles from './AdminPage.module.scss';
+
 import { addCategory, deleteCategory, updateCategory, getCategories } from "../../api/categoriesApi.ts";
-import {deleteUser, getUsers} from "../../api/userApi.ts";
-import {Category} from "../../types/categories.ts";
-import {User} from "../../types/auth.ts";
-import {Product} from "../../types/products.ts";
-import {addProduct, deleteProduct, getProducts, updateProduct} from "../../api/productsApi.ts";
-import {useSelector} from "react-redux";
-import {RootState} from "../../store/store.ts";
-import {useNavigate} from "react-router-dom";
+import { deleteUser, getUsers } from "../../api/userApi.ts";
+import { addProduct, deleteProduct, getProducts, updateProduct } from "../../api/productsApi.ts";
+import { RootState } from "../../store/store.ts";
 
 const AdminPage = () => {
-    const [categories, setCategories] = useState<Category[]>([]);
-    const [users, setUsers] = useState<User[]>([]);
-    const [products, setProducts] = useState<Product[]>([]);
-
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const isAdmin = useSelector((state: RootState) => state.user.user?.role);
-
     const navigate = useNavigate();
+    const location = useLocation();
+
     useEffect(() => {
         if (!isAuthenticated) {
             navigate('/login');
-        } else if(!isAdmin) {
-            navigate('/profile/settings')
+        } else if (!isAdmin) {
+            navigate('/profile/settings');
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, isAdmin, navigate]);
 
-    const fetchCategories = async () => {
-        const fetchedCategories = await getCategories();
-        setCategories(fetchedCategories);
-    };
+    const tabsData = [
+        { path: '/admin/categories', label: 'Categories' },
+        { path: '/admin/users', label: 'Users' },
+        { path: '/admin/products', label: 'Products' },
+    ];
 
-    const fetchUsers = async () => {
-        const data = await getUsers();
-        setUsers(data);
-    }
-
-    const fetchProducts = async () => {
-        const data = await getProducts();
-        setProducts(data);
-    }
-
-    useEffect(() => {
-        fetchProducts();
-        fetchCategories();
-        fetchUsers();
-    }, []);
+    const currentPath = location.pathname;
 
     return (
         <div className={styles.adminPage}>
             <div className="container mx-auto py-10">
-                <Table
-                    entityName="Category"
-                    addEntity={addCategory}
-                    updateEntity={updateCategory}
-                    deleteEntity={deleteCategory}
-                    columns={['name']}
-                    data={categories}
-                    fetchEntities={getCategories}
-                />
-                <Table
-                    entityName="User"
-                    deleteEntity={deleteUser}
-                    columns={['name', 'surname', 'email', 'role']}
-                    data={users}
-                    fetchEntities={getUsers}
-                />
-                <Table
-                    entityName="Product"
-                    addEntity={addProduct}
-                    updateEntity={updateProduct}
-                    deleteEntity={deleteProduct}
-                    columns={['name', 'description', 'price', 'category', 'image']}
-                    data={products}
-                    fetchEntities={getProducts}
-                />
+                <Tabs tabs={tabsData} light={true} />
+
+                {currentPath === '/admin/categories' && (
+                    <Table
+                        entityName="Category"
+                        addEntity={addCategory}
+                        updateEntity={updateCategory}
+                        deleteEntity={deleteCategory}
+                        columns={['name']}
+                        fetchEntities={getCategories}
+                    />
+                )}
+
+                {currentPath === '/admin/users' && (
+                    <Table
+                        entityName="User"
+                        deleteEntity={deleteUser}
+                        columns={['name', 'surname', 'email', 'role']}
+                        fetchEntities={getUsers}
+                    />
+                )}
+
+                {currentPath === '/admin/products' && (
+                    <Table
+                        entityName="Product"
+                        addEntity={addProduct}
+                        updateEntity={updateProduct}
+                        deleteEntity={deleteProduct}
+                        columns={['name', 'description', 'price', 'category', 'image']}
+                        fetchEntities={getProducts}
+                    />
+                )}
             </div>
         </div>
     );

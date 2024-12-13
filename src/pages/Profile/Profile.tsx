@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserStart, fetchUserSuccess, fetchUserFailure } from '../../store/slices/userSlice';
 import { getMe as getMeApi } from '../../api/authApi';
 import { RootState } from '../../store/store';
-import {Link, Outlet, useNavigate} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import styles from './Profile.module.scss';
+import Tabs from "../../components/common/Tabs/Tabs.tsx";
 
 export const Profile = () => {
     const dispatch = useDispatch();
@@ -37,31 +38,18 @@ export const Profile = () => {
         return <div>No user data</div>;
     }
 
+    const tabsData = [
+        { path: '/profile/settings', label: 'Settings' },
+        { path: '/profile/orders', label: 'Orders' },
+        { path: '/profile/repairs', label: 'Repairs' },
+    ];
+
     return (
         <div className={styles.profilePage}>
             <div className={'container mx-auto'}>
                 <h1 className="heading-secondary mb-4">Hello {userData.name} {userData.surname}!</h1>
 
-                <nav className={styles.tabs}>
-                    <Link
-                        to="/profile/settings"
-                        className={`${styles.tab} ${location.pathname === '/profile/settings' ? `${styles.active}` : ''}`}
-                    >
-                        Settings
-                    </Link>
-                    <Link
-                        to="/profile/orders"
-                        className={`${styles.tab} ${location.pathname === '/profile/orders' ? `${styles.active}` : ''}`}
-                    >
-                        Orders
-                    </Link>
-                    <Link
-                        to="/profile/repairs"
-                        className={`${styles.tab} ${location.pathname === '/profile/repairs' ? `${styles.active}` : ''}`}
-                    >
-                        Repairs
-                    </Link>
-                </nav>
+                <Tabs tabs={tabsData} light={false}/>
 
                 <Outlet/>
             </div>

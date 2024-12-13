@@ -1,5 +1,12 @@
 .entityTable {
   margin: 20px 0px;
+  overflow-x: auto;
+
+  &Header {
+    display: flex;
+    align-self: center;
+    justify-content: space-between;
+  }
 
   .table {
     width: 100%;

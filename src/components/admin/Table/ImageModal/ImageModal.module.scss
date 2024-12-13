@@ -1,0 +1,51 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modalOverlay.open {
+  opacity: 1;
+  visibility: visible;
+
+  .modalContent{
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 50%;
+  background: $primary-red;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.modalImage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}

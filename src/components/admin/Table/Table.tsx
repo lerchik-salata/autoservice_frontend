@@ -6,6 +6,10 @@ import plusIcon from '../../../assets/plus.svg';
 import Modal from './Modal/Modal';
 import { handleCreate, handleUpdate, handleDelete, capitalizeFirstLetter } from '../../../utils/tableActions.ts';
 import {concatenateImage} from "../../../utils/concatenateImage.ts";
+import {Loader} from "../../common/Loader/Loader.tsx";
+import placeholder from '../../../assets/placeholder.svg'
+import {ImageModal} from "./ImageModal/ImageModal.tsx";
+import eye from '../../../assets/eye.svg';
 
 interface TableProps {
     entityName: string;
@@ -14,7 +18,6 @@ interface TableProps {
     deleteEntity: (id: string) => Promise<any>;
     fetchEntities: () => Promise<any>;
     columns: string[];
-    data: any[];
 }
 
 const Table: React.FC<TableProps> = ({
@@ -24,7 +27,6 @@ const Table: React.FC<TableProps> = ({
                                          deleteEntity,
                                          fetchEntities,
                                          columns,
-                                         data,
                                      }) => {
     const [entities, setEntities] = useState<any[]>([]);
     const [editingEntity, setEditingEntity] = useState<any>(null);
@@ -32,12 +34,28 @@ const Table: React.FC<TableProps> = ({
     const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        if (data && data.length > 0) {
+    const [imageModalOpen, setImageModalOpen] = useState(false);
+    const [modalImageSrc, setModalImageSrc] = useState<string>('');
+
+    const handleOpenModal = (imageSrc: string) => {
+        setModalImageSrc(imageSrc);
+        setImageModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setImageModalOpen(false);
+        setModalImageSrc('');
+    };
+
+    const fetchData = async () => {
+            const data = await fetchEntities();
             setEntities(data);
             setIsLoading(false);
-        }
-    }, [data]);
+        };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const handleEdit = (entity: any) => {
         setEditingEntity(entity);
@@ -57,13 +75,19 @@ const Table: React.FC<TableProps> = ({
 
     return (
         <div className={styles.entityTable}>
-            {isLoading && <div className={styles.loader}>Loading...</div>}
+            {isLoading && <Loader/>}
 
             {!isLoading && (
                 <>
-                    <h1 className={'heading-tertiary mb-4 text-white'}>
-                        {`${entityName} Management`}
-                    </h1>
+                    <div className={styles.entityTableHeader}>
+                        <h1 className={'heading-tertiary mb-4 text-white'}>
+                            {`${entityName} Management`}
+                        </h1>
+                        {addEntity &&
+                            <button onClick={toggleCreateForm} disabled={isLoading}>
+                                <img src={plusIcon} alt="Add new entity"/>
+                            </button>}
+                    </div>
 
                     <table className={styles.table}>
                         <thead>
@@ -82,11 +106,11 @@ const Table: React.FC<TableProps> = ({
                                 {columns.map((column) => (
                                     <td key={column}>
                                         {column === 'image' ? (
-                                            <img
-                                                src={concatenateImage(entity[column])}
-                                                alt="preview"
-                                                style={{ width: '80px', height: '80px', objectFit: 'cover' }}
-                                            />
+                                                <button
+                                                    onClick={() => handleOpenModal(concatenateImage(entity[column]) || placeholder)}
+                                                >
+                                                    <img src={eye} alt={'Watch'}/>
+                                                </button>
                                         ) : column === 'category' ? (
                                             entity[column]?.name || 'N/A'
                                         ) : (
@@ -96,10 +120,6 @@ const Table: React.FC<TableProps> = ({
                                 ))}
                                 <td>
                                     <div className={'flex gap-4'}>
-                                        {addEntity &&
-                                            <button onClick={toggleCreateForm} disabled={isLoading}>
-                                                <img src={plusIcon} alt="Add new entity"/>
-                                            </button>}
                                         {updateEntity &&
                                             <button onClick={() => handleEdit(entity)} disabled={isLoading}>
                                                 <img src={pencilIcon} alt={'edit'}/>
@@ -123,6 +143,9 @@ const Table: React.FC<TableProps> = ({
                         ))}
                         </tbody>
                     </table>
+
+                    {entities.length === 0 &&
+                        <p className={'heading-tertiary text-center mx-auto mt-10 text-white'}>{`There are no ${entityName}s`}</p>}
 
                     {addEntity && updateEntity &&
                         <Modal
@@ -160,6 +183,14 @@ const Table: React.FC<TableProps> = ({
 
                 </>
             )}
+
+            <ImageModal
+                isOpen={imageModalOpen}
+                onClose={handleCloseModal}
+                imageSrc={modalImageSrc}
+                altText="Entity Image"
+            />
+
         </div>
     );
 };

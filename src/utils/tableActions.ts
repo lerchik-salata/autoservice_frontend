@@ -61,10 +61,42 @@ export const initializeEntityData = (columns: string[], initialData: any) => {
 
 export const validateEntityData = (entityData: any, columns: string[]) => {
     const errors: Record<string, string> = {};
+    const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+
     columns.forEach((column) => {
-        if (!entityData[column]) {
+        const value = entityData[column];
+        if (!value && column !== 'image') {
             errors[column] = `${column} is required`;
         }
+
+        if (column === 'price') {
+            const price = parseFloat(value);
+            if (isNaN(price)) {
+                errors[column] = 'Price must be a valid number';
+            } else if (price <= 0) {
+                errors[column] = 'Price must be greater than zero';
+            }
+        }
+
+        if (column === 'image' && value) {
+            let fileName: string = '';
+
+            if (value instanceof File) {
+                fileName = value.name;
+            } else if (typeof value === 'string') {
+                fileName = value;
+            }
+
+            if (fileName) {
+                const fileExtension = fileName.split('.').pop()?.toLowerCase();
+                if (!fileExtension || !allowedImageExtensions.includes(fileExtension)) {
+                    errors[column] = 'Only image files with .jpg, .jpeg, .png, .gif extensions are allowed';
+                }
+            } else {
+                errors[column] = 'Invalid image file';
+            }
+        }
+
     });
     return errors;
 };

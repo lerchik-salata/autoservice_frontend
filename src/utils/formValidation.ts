@@ -1,4 +1,4 @@
-import { FormData } from '../components/login/LoginForm/LoginForm';
+import { FormData } from '../types/auth';
 
 export const validateField = (name: string, value: string, formData: FormData): string => {
     switch (name) {

@@ -18,12 +18,19 @@ export const addProduct = async (data: AddProductPayload): Promise<any> => {
         const value = data[key as keyof AddProductPayload];
         if (value !== undefined && value !== null) {
             if (value instanceof File || value instanceof Blob) {
-                formData.append(key, value);
+                if (value.size > 0) {
+                    formData.append(key, value);
+                }
             } else {
-                formData.append(key, String(value));
+                if (typeof value === 'string' && value.trim() !== '') {
+                    formData.append(key, value);
+                } else if (typeof value !== 'string') {
+                    formData.append(key, String(value));
+                }
             }
         }
     });
+
 
     const response = await apiClient.post<any>('/admin/products', formData, {
         headers: {
@@ -39,14 +46,17 @@ export const updateProduct = async (id: string, data: UpdateProductPayload): Pro
 
     Object.entries(data).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
-            if (value instanceof File || value instanceof Blob) {
-                formData.append(key, value);
+            if(key === 'image') {
+                if (value instanceof File || value instanceof Blob) {
+                    formData.append(key, value);
+                }
+            } else if(value instanceof Object) {
+                formData.append(key, value.id);
             } else {
                 formData.append(key, String(value));
             }
         }
     });
-
     const response = await apiClient.patch<any>(`/admin/products/${id}`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'

@@ -9,18 +9,21 @@ interface ShopListProps  {
 
 export const ShopList = ({ items } : ShopListProps) => {
     return (
-        <div className={styles.shopList}>
-            {items.map((item) => (
-                <ShopItem
-                    key={item.id}
-                    id={item.id}
-                    name={item.name}
-                    image={concatenateImage(item.image)}
-                    price={item.price}
-                    category={item.category.name}
-                />
-            ))}
-        </div>
+        <>
+            {items.length === 0 && <p className={'heading-tertiary text-center mx-auto mt-10'}>There are no items in the shop</p>}
+            <div className={styles.shopList}>
+                {items.map((item) => (
+                    <ShopItem
+                        key={item.id}
+                        id={item.id}
+                        name={item.name}
+                        image={concatenateImage(item.image)}
+                        price={item.price}
+                        category={item.category.name}
+                    />
+                ))}
+            </div>
+        </>
     );
 };
 

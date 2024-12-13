@@ -1,5 +1,11 @@
+import styles from "./Contact.module.scss";
+
 export const Contact = () => {
     return (
-        <h1>contact</h1>
+        <div className={styles.contactPage}>
+            <div className={'container mx-auto'}>
+                <h1 className={'heading-secondary text-white'}>contact</h1>
+            </div>
+        </div>
     )
 }

@@ -74,6 +74,10 @@ html {
   &:hover {
     color: $primary-red;
   }
+
+  &.active {
+    border-bottom: 2px solid $primary-red;
+  }
 }
 
 @media(max-width: 1300px) {
