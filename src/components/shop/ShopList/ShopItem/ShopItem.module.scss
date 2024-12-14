@@ -6,6 +6,11 @@
   gap: 12px;
   background: $white;
 
+  &:hover {
+    box-shadow: 0 0 10px 4px rgba(255, 0, 0, 0.5);
+    animation: glow 1.5s infinite ease-in-out;
+  }
+
   img {
     height: 250px;
     width: 100%;
@@ -19,5 +24,17 @@
     text-transform: uppercase;
     align-self: center;
     font-size: 12px;
+  }
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 15px 6px rgba(255, 0, 0, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.4);
   }
 }

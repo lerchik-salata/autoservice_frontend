@@ -6,6 +6,7 @@ import styles from "./ProductPage.module.scss";
 import placeholder from '../../assets/placeholder.svg'
 import {concatenateImage} from "../../utils/concatenateImage.ts";
 import {Loader} from "../../components/common/Loader/Loader.tsx";
+import {CartButtons} from "../../components/cart/CartButtons/CartButtons.tsx";
 
 export const ProductPage = () => {
     const { id } = useParams();
@@ -46,6 +47,11 @@ export const ProductPage = () => {
                                 <p className={styles.productItemCategory}>{product.category.name}</p>
                                 <p className={'text-small'}>Description: {product.description}</p>
                                 <p className={'text'}>Price: ${product.price}</p>
+                                <CartButtons id={product.id}
+                                             name={product.name}
+                                             image={product.image ? product.image : ''}
+                                             price={product.price}
+                                             category={product.category}/>
                             </div>
                         </div>
                     )}

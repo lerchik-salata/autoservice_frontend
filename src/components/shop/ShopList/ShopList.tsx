@@ -17,9 +17,9 @@ export const ShopList = ({ items } : ShopListProps) => {
                         key={item.id}
                         id={item.id}
                         name={item.name}
-                        image={concatenateImage(item.image)}
+                        image={item.image ?concatenateImage(item.image) : ''}
                         price={item.price}
-                        category={item.category.name}
+                        category={item.category}
                     />
                 ))}
             </div>

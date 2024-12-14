@@ -12,6 +12,7 @@ import {Orders} from "./pages/Profile/Orders/Orders.tsx";
 import {Repairs} from "./pages/Profile/Repairs/Repairs.tsx";
 import {ProductPage} from "./pages/Product/ProductPage.tsx";
 import {ScrollToHashElement} from "./utils/scrolltoHashElement.tsx";
+import {CartPage} from "./pages/Cart/CartPage.tsx";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
                   <Routes>
                       <Route path="/" element={<Home />} />
                       <Route path="/shop" element={<Shop />} />
+                      <Route path="/cart" element={<CartPage />} />
                       <Route path="/contact" element={<Contact />} />
                       <Route path="/login" element={<Login />} />
                       <Route path="/register" element={<Login />} />

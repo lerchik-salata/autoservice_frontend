@@ -12,16 +12,10 @@ export const Footer = () => {
                 </a>
                 <nav className={'flex gap-4'}>
                     <NavLink
-                        to="/public"
+                        to="/"
                         className="link"
                     >
-                        Services
-                    </NavLink>
-                    <NavLink
-                        to="/public"
-                        className="link"
-                    >
-                        About
+                        Home
                     </NavLink>
                     <NavLink to="/shop" className="link">shop</NavLink>
                     <NavLink to="/contact" className="link">contact</NavLink>

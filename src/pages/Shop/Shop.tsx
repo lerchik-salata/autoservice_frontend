@@ -6,7 +6,6 @@ import { Product } from "../../types/products.ts";
 import { Category } from "../../types/categories.ts";
 import { getCategories } from "../../api/categoriesApi.ts";
 import {filterItems, handleCategoryChange, handlePriceChange, PriceRange} from "../../utils/filterUtils.ts";
-import {Loader} from "../../components/common/Loader/Loader.tsx";
 
 export const Shop = () => {
     const [items, setItems] = useState<Product[]>([]);
@@ -49,7 +48,6 @@ export const Shop = () => {
 
     return (
         <div className={styles.shopPage}>
-            {isLoading && <Loader/>}
 
             {!isLoading && (
                 <div className={'container mx-auto'}>

@@ -6,7 +6,7 @@ export interface Product {
     description: string,
     price: string,
     category: Category,
-    image: string
+    image?: string
 }
 
 export interface GetProductsResponse {

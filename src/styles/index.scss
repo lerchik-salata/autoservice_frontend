@@ -42,6 +42,14 @@ html {
   &:hover {
     background: $primary-red;
   }
+
+  &.red {
+    color: $primary-red;
+
+    &:hover {
+      color: $white;
+    }
+  }
 }
 
   .btn-secondary {

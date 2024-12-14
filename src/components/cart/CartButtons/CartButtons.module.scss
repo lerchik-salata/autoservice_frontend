@@ -1,0 +1,10 @@
+.cartButtons {
+  display: flex;
+  gap: 12px;
+
+  .quantityControl {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+}

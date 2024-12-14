@@ -19,6 +19,8 @@ export const Header = () => {
         navigate('/login');
     };
 
+    const totalQuantity = useSelector((state: RootState) => state.cart.totalQuantity);
+
     return (
         <header className={styles.header}>
             <div className="container mx-auto flex items-center justify-between flex-wrap gap-5">
@@ -26,13 +28,19 @@ export const Header = () => {
                     <img src={logo} alt="Pro Auto"/>
                 </NavLink>
                 <nav className="flex gap-4">
-                    <NavLink to={'/#services'} className={'link'}>Services</NavLink>
-                    <NavLink to={'/#about'} className={'link'}>About</NavLink>
+                    <NavLink to={'/'} className={'link'}>Home</NavLink>
                     <NavLink to="/shop" className={'link'}>Shop</NavLink>
                     <NavLink to="/contact" className={'link'}>Contact</NavLink>
                 </nav>
                 <div className="flex gap-2 items-center">
-                    <img src={cart} alt="Cart" />
+                    <NavLink to={'/cart'} className="relative">
+                        <img src={cart} alt="Cart"/>
+                        {totalQuantity > 0 && (
+                            <span className={styles.badge}>
+                                {totalQuantity}
+                            </span>
+                        )}
+                    </NavLink>
                     {isAuthenticated ? (
                         <>
                             <NavLink to="/profile/settings">
