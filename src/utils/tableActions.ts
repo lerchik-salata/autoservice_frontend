@@ -1,3 +1,5 @@
+import { isAxiosError} from 'axios';
+
 export const handleCreate = async (
     newEntity: any,
     addEntity: (data: any) => Promise<any>,
@@ -13,7 +15,11 @@ export const handleCreate = async (
         setEntities(updatedEntities);
         setShowModal(false);
     } catch (error) {
-        console.error('Error creating entity:', error);
+        if (isAxiosError(error) && error.response?.status === 400 && error.response.data?.detail) {
+            alert(`Error: ${error.response.data.detail}`);
+        } else {
+            console.error('Error creating entity:', error);
+        }
     } finally {
         setIsLoading(false);
     }
@@ -53,7 +59,9 @@ export const handleDelete = async (
         setIsLoading(false);
     }
 };
+
 export const initializeEntityData = (columns: string[], initialData: any) => {
+    console.log(initialData)
     return initialData
         ? initialData
         : Object.fromEntries(columns.map((column) => [column, '']));
@@ -65,9 +73,17 @@ export const validateEntityData = (entityData: any, columns: string[]) => {
 
     columns.forEach((column) => {
         const value = entityData[column];
-        if (!value && column !== 'image') {
+        if (!value && column !== 'image' && column !=='application' && column !== 'customer') {
             errors[column] = `${column} is required`;
         }
+
+        // if (column === 'application'  && value['application_id'] === '') {
+        //     errors[column] = `Application is required`;
+        // }
+        //
+        // if (column === 'customer' && value['customer_id'] === '') {
+        //     errors[column] = `Customer is required`;
+        // }
 
         if (column === 'price') {
             const price = parseFloat(value);
@@ -101,4 +117,10 @@ export const validateEntityData = (entityData: any, columns: string[]) => {
     return errors;
 };
 
-export const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+export const capitalizeFirstLetter = (str: string) =>
+    str
+        .replace(/_/g, ' ')
+        .charAt(0).toUpperCase() +
+    str
+        .replace(/_/g, ' ')
+        .slice(1);

@@ -5,6 +5,11 @@ import { initializeEntityData, validateEntityData, capitalizeFirstLetter } from 
 import { Category } from "../../../../types/categories.ts";
 import { getCategories } from "../../../../api/categoriesApi.ts";
 import {trimImagePath} from "../../../../utils/concatenateImage.ts";
+import {Application} from "../../../../types/applications.ts";
+import {getApplications} from "../../../../api/applicationApi.ts";
+import {getUsers} from "../../../../api/userApi.ts";
+import {User} from "../../../../types/auth.ts";
+import {RepairStage, ServiceType} from "../../../../types/repairs.ts";
 
 interface ModalProps {
     isOpen: boolean;
@@ -22,6 +27,8 @@ const Modal = ({ isOpen, onClose, onSave, initialData, isEditing, columns }: Mod
     const [errors, setErrors] = useState<any>({});
 
     const [categories, setCategories] = useState<Category[]>([]);
+    const [applications, setApplications] = useState<Application[]>([]);
+    const [users, setUsers] = useState<User[]>([]);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -33,7 +40,27 @@ const Modal = ({ isOpen, onClose, onSave, initialData, isEditing, columns }: Mod
             }
         };
 
+        const fetchApplications = async () => {
+            try {
+                const response = await getApplications();
+                setApplications(response);
+            } catch (error) {
+                console.error('Error fetching applications:', error);
+            }
+        };
+
+        const fetchUsers = async () => {
+            try {
+                const response = await getUsers();
+                setUsers(response);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
         fetchCategories();
+        fetchApplications();
+        fetchUsers();
     }, []);
 
     useEffect(() => {
@@ -50,10 +77,17 @@ const Modal = ({ isOpen, onClose, onSave, initialData, isEditing, columns }: Mod
             } else {
                 setEntityData({ ...entityData, [field]: value });
             }
-        } else if (e.target instanceof HTMLSelectElement) {
+        } else if (e.target instanceof HTMLSelectElement)
+        {
             const { value } = e.target;
+            if(field === 'application') {
+                setEntityData({ ...entityData, ['application_id']: value, ['application']: value });
+            } else if (field === 'customer'){
+                setEntityData({ ...entityData, ['customer_id']: value, ['customer']: value });
+            } else {
+                setEntityData({ ...entityData, [field]: value });
+            }
             console.log(`Selected value for ${field}:`, value);
-            setEntityData({ ...entityData, [field]: value });
         }
     };
 
@@ -96,7 +130,7 @@ const Modal = ({ isOpen, onClose, onSave, initialData, isEditing, columns }: Mod
                             </div>
                         ) : column === 'category' ? (
                             <select
-                                value={entityData[column].id ? entityData[column].id : ''}
+                                value={entityData[column].id}
                                 onChange={(e) => handleChange(e, column)}
                                 className={styles.selectInput}
                             >
@@ -104,6 +138,58 @@ const Modal = ({ isOpen, onClose, onSave, initialData, isEditing, columns }: Mod
                                 {categories.map((category) => (
                                     <option key={category.id} value={category.id}>
                                         {category.name}
+                                    </option>
+                                ))}
+                            </select>
+                        )  : column === 'application' ? (
+                            <select
+                                value={entityData[column].id}
+                                onChange={(e) => handleChange(e, column)}
+                                className={styles.selectInput}
+                            >
+                                <option value="">Select Application</option>
+                                {applications.map((application) => (
+                                    <option key={application.id} value={application.id}>
+                                        {application.phone_number}
+                                    </option>
+                                ))}
+                            </select>
+                        ) : column === 'customer' ? (
+                            <select
+                                value={entityData[column].id}
+                                onChange={(e) => handleChange(e, column)}
+                                className={styles.selectInput}
+                            >
+                                <option value="">Select Customer</option>
+                                {users.map((user) => (
+                                    <option key={user.id} value={user.id}>
+                                        {user.email}
+                                    </option>
+                                ))}
+                            </select>
+                        ) : column === 'repair_stage' ? (
+                            <select
+                                value={entityData[column]}
+                                onChange={(e) => handleChange(e, column)}
+                                className={styles.selectInput}
+                            >
+                                <option value="">Select Repair Stage</option>
+                                {Object.values(RepairStage).map((stage) => (
+                                    <option key={stage} value={stage}>
+                                        {stage.replace(/_/g, ' ').toLowerCase()}
+                                    </option>
+                                ))}
+                            </select>
+                        ) : column === 'service_type' ? (
+                            <select
+                                value={entityData[column]}
+                                onChange={(e) => handleChange(e, column)}
+                                className={styles.selectInput}
+                            >
+                                <option value="">Select Service Type</option>
+                                {Object.values(ServiceType).map((type) => (
+                                    <option key={type} value={type}>
+                                        {type.replace(/_/g, ' ').toLowerCase()}
                                     </option>
                                 ))}
                             </select>

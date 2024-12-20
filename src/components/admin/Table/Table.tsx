@@ -3,6 +3,8 @@ import styles from './Table.module.scss';
 import pencilIcon from '../../../assets/pencil-square.svg';
 import deleteIcon from '../../../assets/trash.svg';
 import plusIcon from '../../../assets/plus.svg';
+import crossIcon from '../../../assets/close.svg';
+import checkIcon from '../../../assets/check.svg';
 import Modal from './Modal/Modal';
 import { handleCreate, handleUpdate, handleDelete, capitalizeFirstLetter } from '../../../utils/tableActions.ts';
 import {concatenateImage} from "../../../utils/concatenateImage.ts";
@@ -10,6 +12,7 @@ import {Loader} from "../../common/Loader/Loader.tsx";
 import placeholder from '../../../assets/placeholder.svg'
 import {ImageModal} from "./ImageModal/ImageModal.tsx";
 import eye from '../../../assets/eye.svg';
+import {OrderItems} from "../../../types/orders.ts";
 
 interface TableProps {
     entityName: string;
@@ -113,7 +116,19 @@ const Table: React.FC<TableProps> = ({
                                                 </button>
                                         ) : column === 'category' ? (
                                             entity[column]?.name || 'N/A'
-                                        ) : (
+                                        ) : column === 'processed' ? (
+                                            entity[column] ? <img src={checkIcon}/> : <img src={crossIcon}/>
+                                        ): column === 'application' ? (
+                                            entity[column]?.phone_number|| 'N/A'
+                                        ) : column === 'customer' ? (
+                                            entity[column]?.name|| 'N/A'
+                                        ) : column === 'user' ? (
+                                            entity[column].name + ' ' + entity[column].surname
+                                        ): column === 'order_items' ? (
+                                            entity[column]
+                                                .map((item : OrderItems) => `${item.product.name} (${item.quantity})`)
+                                                .join(', ')
+                                        ):(
                                             entity[column]
                                         )}
                                     </td>

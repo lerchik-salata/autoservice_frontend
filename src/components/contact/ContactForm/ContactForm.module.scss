@@ -36,6 +36,10 @@
   }
 }
 
+.errorText {
+  color: $primary-red;
+}
+
 @keyframes glow {
   0% {
     box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.4);
